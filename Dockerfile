@@ -5,6 +5,9 @@ ARG TERRAFORM_VERSION="0.15.0"
 ARG TFSEC_VERSION="v0.39.21" 
 ARG TERRAFORM_DOCS_VERSION="v0.12.0"
 ARG TFLINT_VERSION="v0.27.0"
+ARG TFLINT_RULESET_AZURERM="v0.10.0"
+ARG TFLINT_RULESET_AWS="v0.4.1"
+ARG TFLINT_RULESET_GOOGLE="v0.9.0"
 ARG CHECKOV_VERSION="1.0.838"
 
 # Install general dependencies
@@ -24,6 +27,12 @@ RUN add-apt-repository ppa:deadsnakes/ppa && \
 RUN curl -fsSL https://apt.releases.hashicorp.com/gpg | apt-key add - && \
     apt-add-repository "deb [arch=amd64] https://apt.releases.hashicorp.com $(lsb_release -cs) main" && \
     apt-get update && apt-get install terraform=${TERRAFORM_VERSION}
+
+# Install tflint ruleset azurerm, aws, google
+RUN mkdir -p /root/.tflint.d/plugins && \
+    curl -L "https://github.com/terraform-linters/tflint-ruleset-azurerm/releases/download/${TFLINT_RULESET_AZURERM}/tflint-ruleset-azurerm_linux_amd64.zip" > tflint-ruleset-azurerm.zip && unzip tflint-ruleset-azurerm.zip && rm tflint-ruleset-azurerm.zip && mv tflint-ruleset-azurerm /root/.tflint.d/plugins && \
+    curl -L "https://github.com/terraform-linters/tflint-ruleset-aws/releases/download/${TFLINT_RULESET_AWS}/tflint-ruleset-aws_linux_amd64.zip" > tflint-ruleset-aws.zip && unzip tflint-ruleset-aws.zip && rm tflint-ruleset-aws.zip && mv tflint-ruleset-aws /root/.tflint.d/plugins && \
+    curl -L "https://github.com/terraform-linters/tflint-ruleset-google/releases/download/${TFLINT_RULESET_GOOGLE}/tflint-ruleset-google_linux_amd64.zip" > tflint-ruleset-google.zip && unzip tflint-ruleset-google.zip && rm tflint-ruleset-google.zip && mv tflint-ruleset-google /root/.tflint.d/plugins
 
 # Checking all binaries are in the PATH
 RUN terraform --help
