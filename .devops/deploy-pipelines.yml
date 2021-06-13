@@ -13,7 +13,7 @@ steps:
   - task: Docker@2
     inputs:
       containerRegistry: '$(CONTAINER_REGISTRY_SERVICE_CONN)'
-      repository: '$(CONTAINER_REGISTRY_NAME)'
+      repository: 'pre-commit-terraform'
       command: 'buildAndPush'
       Dockerfile: '.Dockerfile'
       arguments: TERRAFORM_VERSION=$(TERRAFORM_VERSION)
