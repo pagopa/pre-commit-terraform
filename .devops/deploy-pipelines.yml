@@ -15,6 +15,6 @@ steps:
       containerRegistry: '$(CONTAINER_REGISTRY_SERVICE_CONN)'
       repository: 'pre-commit-terraform'
       command: 'buildAndPush'
-      Dockerfile: '.Dockerfile'
+      Dockerfile: 'Dockerfile'
       # arguments: TERRAFORM_VERSION=$(TERRAFORM_VERSION)
       tags: '0.15.3'
