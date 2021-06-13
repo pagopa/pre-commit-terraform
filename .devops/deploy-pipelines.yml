@@ -1,13 +1,13 @@
 pool:
   vmImage: ubuntu-latest
 
-parameters:
-  - name: TERRAFORM_VERSION
-    displayName: "Terraform version"
-    type: string
-    values:
-      - '0.15.3'
-    default: patch
+# parameters:
+#   - name: TERRAFORM_VERSION
+#     displayName: "Terraform version"
+#     type: string
+#     values:
+#       - '0.15.3'
+#     default: patch
 
 steps:
   - task: Docker@2
@@ -16,5 +16,5 @@ steps:
       repository: 'pre-commit-terraform'
       command: 'buildAndPush'
       Dockerfile: '.Dockerfile'
-      arguments: TERRAFORM_VERSION=$(TERRAFORM_VERSION)
-      tags: '$(TERRAFORM_VERSION)'
+      # arguments: TERRAFORM_VERSION=$(TERRAFORM_VERSION)
+      tags: '0.15.3'
