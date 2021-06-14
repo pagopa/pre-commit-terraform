@@ -9,20 +9,18 @@ parameters:
 
 steps:
   - task: Docker@2
+    displayName: Build
     inputs:
-      displayName: Build
       containerRegistry: '$(CONTAINER_REGISTRY_SERVICE_CONN)'
       repository: 'pre-commit-terraform'
       command: 'build'
-      Dockerfile: 'Dockerfile'
       arguments: --build-arg TERRAFORM_VERSION=$(TERRAFORM_VERSION)
       tags: '$(TERRAFORM_VERSION)'
 
   - task: Docker@2
+    displayName: Push
     inputs:
-      displayName: Push
       containerRegistry: '$(CONTAINER_REGISTRY_SERVICE_CONN)'
       repository: 'pre-commit-terraform'
       command: 'push'
-      Dockerfile: 'Dockerfile'
       tags: '$(TERRAFORM_VERSION)'
