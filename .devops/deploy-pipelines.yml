@@ -1,12 +1,6 @@
 pool:
   vmImage: ubuntu-latest
 
-parameters:
-  - name: TERRAFORM_VERSION
-    displayName: "Terraform version"
-    type: string
-    default: '0.15.3'
-
 steps:
   - task: Docker@2
     displayName: Build
@@ -14,8 +8,6 @@ steps:
       containerRegistry: '$(CONTAINER_REGISTRY_SERVICE_CONN)'
       repository: 'pre-commit-terraform'
       command: 'build'
-      arguments: --build-arg TERRAFORM_VERSION=$(TERRAFORM_VERSION)
-      # tags: "$(TERRAFORM_VERSION)"
 
   - task: Docker@2
     displayName: Push
@@ -23,4 +15,4 @@ steps:
       containerRegistry: '$(CONTAINER_REGISTRY_SERVICE_CONN)'
       repository: 'pre-commit-terraform'
       command: 'push'
-      tags: "$(TERRAFORM_VERSION)"
+      tags: "0.15.3"
